@@ -1,0 +1,3 @@
+> makeSite
+$ must-mirror target/site/sample1.md expected/sample1.md
+$ must-mirror target/site/nested/sample2.md expected/nested/sample2.md
