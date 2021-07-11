@@ -166,13 +166,12 @@ class Rendering(parentClassLoader: Option[ClassLoader] = None) {
     // Anonymise the REPL-specific names for nicer output.
     def anonymiseConsole(e: Throwable): Throwable = {
       val traces = e.getStackTrace.map { trace =>
-        def trimClassName(name: String): String =
-          if name.startsWith(REPL_WRAPPER_NAME_PREFIX) then
-            "<console>" + name.drop(REPL_WRAPPER_NAME_PREFIX.length).dropWhile(c => c.isDigit || c == '$')
+        def trimName(name: String, prefix: String): String =
+          if name.startsWith(prefix) then "<console>" + name.drop(prefix.length).dropWhile(c => c.isDigit || c == '$')
           else name
 
-        val className = trimClassName(trace.getClassName)
-        val fileName  = trimClassName(trace.getFileName)
+        val className = trimName(trace.getClassName, REPL_WRAPPER_NAME_PREFIX)
+        val fileName  = trimName(trace.getFileName, str.REPL_SESSION_LINE)
 
         new StackTraceElement(className, trace.getMethodName(), fileName, trace.getLineNumber())
       }
