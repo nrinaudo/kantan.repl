@@ -21,7 +21,7 @@ lazy val markdown = project
     moduleName   := "kantan.repl-markdown",
     name         := "markdown",
     scalaVersion := Versions.scala3,
-    Test / fork := true,
+    Test / fork  := true,
     libraryDependencies ++= Seq(
       "io.circe"          %% "circe-parser"    % Versions.circe,
       "org.scalacheck"    %% "scalacheck"      % Versions.scalacheck              % "test",
