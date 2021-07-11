@@ -28,7 +28,7 @@ addSbtPlugin("com.nrinaudo" % "kantan.repl-sbt" % "X.Y.Z")
 
 It'll add the following SBT keys:
 * `mdReplSourceDirectory`: source directory for markdown files you need processed (defaults to `./src/main/mdrepl`).
-* `mdReplTargetDirectory`: target directory for processed markdown files (defaults to `./target/main/mdrepl`).
+* `mdReplTargetDirectory`: target directory for processed markdown files (defaults to `./target/scala-3.0.0/mdrepl`).
 * `mdReplNameFilter`: filter for files to process (defaults to `"*.markdown" || "*.md" || "*.htm" || "*.html"`).
 * `mdRepl`: task that processes all files found in `mdReplSourceDirectory`.
 
