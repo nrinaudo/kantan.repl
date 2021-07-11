@@ -1,0 +1,5 @@
+# Makes sure that the mdrepl command is executed properly when the source and target directories
+# have been changed.
+> mdRepl
+$ must-mirror target/scala-3.0.0/mdrepl/sample1.foo expected/sample1.foo
+$ must-mirror target/scala-3.0.0/mdrepl/nested/sample2.foo expected/nested/sample2.foo

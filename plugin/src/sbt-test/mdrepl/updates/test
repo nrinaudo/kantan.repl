@@ -1,0 +1,19 @@
+# First compilation: all artifacts must be newer
+> mdRepl
+$ newer target/scala-3.0.0/mdrepl/sample.md src/main/mdrepl/sample.md
+$ newer target/streams/_global/mdRepl/_global/streams/sample.md src/main/mdrepl/sample.md
+
+# Update the input, but not the code.
+# The output should be updated, but the cache shouldn't have been touched.
+$ touch src/main/mdrepl/sample.md
+> mdRepl
+$ newer target/scala-3.0.0/mdrepl/sample.md src/main/mdrepl/sample.md
+-$ newer target/streams/_global/mdRepl/_global/streams/sample.md src/main/mdrepl/sample.md
+
+
+# Update the code.
+# Both the output and the cache should be newer.
+$ copy-file changes/sample.md src/main/mdrepl/sample.md
+> mdRepl
+$ newer target/scala-3.0.0/mdrepl/sample.md src/main/mdrepl/sample.md
+$ newer target/streams/_global/mdRepl/_global/streams/sample.md src/main/mdrepl/sample.md
