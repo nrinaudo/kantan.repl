@@ -1,5 +1,8 @@
 lazy val root = Project(id = "kantan-repl", base = file("."))
-  .settings(moduleName := "root")
+  .settings(
+    moduleName     := "root",
+    publish / skip := true
+  )
   .aggregate(core, markdown, plugin, sitePlugin)
 
 // Core classes, mostly Repl itself.
