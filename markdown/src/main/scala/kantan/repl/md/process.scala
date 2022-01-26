@@ -92,6 +92,9 @@ def evaluate(repl: Repl, source: String, blocks: List[Block]): Try[List[Processe
       ProcessedBlock.Other(content)
 
     case Block.Repl(code, modifier, startAt) =>
+      if(modifier == Modifier.Reset)
+        repl.resetToInitial()
+
       val diags = repl.run(code + "\n")
 
       firstError(diags) match {

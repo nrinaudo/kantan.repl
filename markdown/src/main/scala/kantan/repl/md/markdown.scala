@@ -31,6 +31,7 @@ enum Block {
 
 enum Modifier {
   case Fail
+  case Reset
   case Invisible
   case Print
   case Silent
@@ -47,6 +48,7 @@ private def extractModifier(line: String, lineNumber: Int) = {
   if index < 0 then Modifier.Print
   else
     line.splitAt(index + 1)(1) match {
+      case "reset"      => Modifier.Reset
       case "print" | "" => Modifier.Print
       case "invisible"  => Modifier.Invisible
       case "silent"     => Modifier.Silent
@@ -149,6 +151,7 @@ def print(blocks: List[Block], out: Writer): Unit = {
     case Block.Repl(value, modifier, _) =>
       out.write("```scala repl")
       modifier match {
+        case Modifier.Reset     => out.write(":reset")
         case Modifier.Silent    => out.write(":silent")
         case Modifier.Fail      => out.write(":fail")
         case Modifier.Invisible => out.write(":invisible")

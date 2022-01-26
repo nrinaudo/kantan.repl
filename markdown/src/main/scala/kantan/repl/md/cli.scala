@@ -27,10 +27,9 @@ import scala.util.{Failure, Success, Try}
 
 private def toMarkdown(blocks: List[ProcessedBlock]): List[Block] = {
 
-  def visible(block: ProcessedBlock) = block match {
-    case ProcessedBlock.Repl(_, Modifier.Invisible, _) => false
-    case _                                             => true
-  }
+  def visible(block: ProcessedBlock) = block match
+    case ProcessedBlock.Repl(_, Modifier.Invisible | Modifier.Reset, _) => false
+    case _                                                              => true
 
   def scala(content: String) = s"```scala\n$content\n```"
 

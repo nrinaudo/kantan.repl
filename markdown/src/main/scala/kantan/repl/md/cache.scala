@@ -29,6 +29,7 @@ import scala.util.{Failure, Success, Try}
 // - Type class instances ----------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 private given Encoder[Modifier] = Encoder[String].contramap {
+  case Modifier.Reset     => "reset"
   case Modifier.Fail      => "fail"
   case Modifier.Invisible => "invisible"
   case Modifier.Print     => "print"
@@ -36,6 +37,7 @@ private given Encoder[Modifier] = Encoder[String].contramap {
 }
 
 private given Decoder[Modifier] = Decoder[String].emap {
+  case "reset"     => Right(Modifier.Reset)
   case "fail"      => Right(Modifier.Fail)
   case "invisible" => Right(Modifier.Invisible)
   case "print"     => Right(Modifier.Print)

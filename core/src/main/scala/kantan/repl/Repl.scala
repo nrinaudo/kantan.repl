@@ -84,7 +84,7 @@ class Repl(settings: List[String]) extends Driver {
     * This method is responsible for performing an all encompassing reset. As such, when the user enters `:reset` this
     * method should be called to reset everything properly
     */
-  protected def resetToInitial(): Unit = {
+  def resetToInitial(): Unit = {
     rootCtx = initialCtx
     if rootCtx.settings.outputDir.isDefault(using rootCtx) then
       rootCtx = rootCtx.fresh
