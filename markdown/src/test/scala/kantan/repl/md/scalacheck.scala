@@ -26,7 +26,8 @@ given Arbitrary[String] = Arbitrary(Gen.identifier)
 
 val lines: Gen[String] = arbitrary[List[String]].map(_.mkString("\n"))
 
-val modifier: Gen[Modifier] = Gen.oneOf(Modifier.Fail, Modifier.Invisible, Modifier.Print, Modifier.Silent)
+val modifier: Gen[Modifier] =
+  Gen.oneOf(Modifier.Fail, Modifier.Invisible, Modifier.Print, Modifier.Silent, Modifier.Reset)
 
 val repl: Gen[Block.Repl] = for {
   value    <- lines
