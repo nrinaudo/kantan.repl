@@ -86,7 +86,6 @@ private def firstError(diags: List[Diagnostic]): Option[Diagnostic] = diags.find
 }
 
 def evaluate(repl: Repl, source: String, blocks: List[Block]): Try[List[ProcessedBlock]] = Try {
-
   blocks.map {
     case Block.Other(content) =>
       ProcessedBlock.Other(content)

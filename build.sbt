@@ -27,9 +27,8 @@ lazy val markdown = project
     Test / fork  := true,
     libraryDependencies ++= Seq(
       "io.circe"          %% "circe-parser"    % Versions.circe,
-      "org.scalacheck"    %% "scalacheck"      % Versions.scalacheck              % "test",
       "org.scalatest"     %% "scalatest"       % Versions.scalatest               % "test",
-      "org.scalatestplus" %% "scalacheck-1-15" % Versions.scalatestPlusScalacheck % "test"
+      "org.scalatestplus" %% "scalacheck-1-17" % Versions.scalatestPlusScalacheck % "test"
     )
   )
   .dependsOn(core)

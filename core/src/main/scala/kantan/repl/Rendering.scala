@@ -50,7 +50,7 @@ class Rendering(parentClassLoader: Option[ClassLoader] = None) {
 
   /** A `MessageRenderer` for the REPL without file positions */
   private val messageRenderer = new MessageRendering {
-    override def posStr(pos: SourcePosition, diagnosticLevel: String, message: Message)(using Context): String = ""
+//    override def posStr(pos: SourcePosition, diagnosticLevel: String, message: Message)(using Context): String = ""
   }
 
   private var myClassLoader: ClassLoader = _
@@ -190,7 +190,7 @@ class Rendering(parentClassLoader: Option[ClassLoader] = None) {
 
 object Rendering {
 
-  final val REPL_WRAPPER_NAME_PREFIX = s"${nme.REPL_PACKAGE}.${str.REPL_SESSION_LINE}"
+  final val REPL_WRAPPER_NAME_PREFIX = str.REPL_SESSION_LINE //s"${nme.REPL_PACKAGE}.${str.REPL_SESSION_LINE}"
 
   extension (s: Symbol)
     def showUser(using Context): String = {

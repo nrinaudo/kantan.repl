@@ -77,7 +77,7 @@ class Repl(settings: List[String]) extends Driver {
   }
 
   /** the initial, empty state of the REPL session */
-  final def initialState: State = State(0, 0, Map.empty, rootCtx)
+  final def initialState: State = State(0, 0, Map.empty, Set.empty, rootCtx)
 
   /** Reset state of repl to the initial state
     *
@@ -105,11 +105,11 @@ class Repl(settings: List[String]) extends Driver {
 
   override protected def command: CompilerCommand = ReplCommand
 
-  final def run(input: String): List[Diagnostic] = DiagnosticOutputStream.wrap {
-    val parsed = ParseResult(input)(state)
-    interpret(parsed)
-  }
-
+  final def run(input: String): List[Diagnostic] =
+    DiagnosticOutputStream.wrap {
+      val parsed = ParseResult(input)(state)
+      interpret(parsed)
+    }
   private def newRun() = {
     val run = compiler.newRun(rootCtx.fresh.setReporter(newStoreReporter), state)
     state = state.copy(context = run.runContext)

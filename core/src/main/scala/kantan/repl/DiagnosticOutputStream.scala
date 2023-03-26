@@ -24,23 +24,25 @@ import java.io.{OutputStream, PrintStream}
 class DiagnosticOutputStream extends OutputStream {
   val builder = new StringBuilder
 
-  override def write(c: Int) = builder.append(c.toChar)
+  override def write(c: Int) =
+    builder.append(c.toChar)
 
   def content(): Option[Diagnostic] = {
     val out = builder.result()
+    builder.clear()
     if out.nonEmpty then Some(new Diagnostic.Info(out, NoSourcePosition))
     else None
   }
 }
 
 object DiagnosticOutputStream {
+  private val out = new DiagnosticOutputStream
 
   /** Captures the output of the specified `op` and appends it at the end of the corresponding list of diagnostics. */
   def wrap(op: => List[Diagnostic]): List[Diagnostic] = {
     val savedOut = System.out
     val savedErr = System.err
 
-    val out   = new DiagnosticOutputStream
     val print = new PrintStream(out, true, "UTF-8")
 
     try {
@@ -53,7 +55,6 @@ object DiagnosticOutputStream {
         case Some(diag) => diagnostics :+ diag
         case None       => diagnostics
       }
-
     }
     finally {
       System.setOut(savedOut)

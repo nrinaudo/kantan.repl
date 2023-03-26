@@ -39,4 +39,34 @@ class MarkdownTests extends AnyFunSuite with Matchers with ScalaCheckDrivenPrope
       trip1 should be(trip2)
     }
   }
+
+  def getOutput(source: String): String = {
+    import kantan.repl.Repl
+    import kantan.repl.md.process.ProcessedBlock
+
+    process
+      .evaluate(
+        new Repl(cli.rootOptions),
+        "input",
+        markdown.load(source.split("\n").iterator)
+      )
+      .get
+      .map {
+        case ProcessedBlock.Repl(_, _, output) => output
+        case ProcessedBlock.Other(content)     => content
+      }
+      .mkString("\n")
+  }
+
+  test("Regression: successive printlns should all be printed") {
+    val input = """|```scala repl
+                   |println("foo")
+                   |```
+                   |```scala repl
+                   |println("bar")
+                   |```
+                   |""".stripMargin
+
+    getOutput(input) should be("// foo\n// bar")
+  }
 }
