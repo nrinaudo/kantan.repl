@@ -41,7 +41,7 @@ import dotty.tools.dotc.{CompilationUnit, Driver}
 import dotty.tools.dotc.config.CompilerCommand
 import dotty.tools.io._
 import scala.annotation.tailrec
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters
 import scala.util.Using
 import dotty.tools.dotc.interfaces.Diagnostic.INFO
 
@@ -107,7 +107,7 @@ class Repl(settings: List[String]) extends Driver {
 
   final def run(input: String): List[Diagnostic] =
     DiagnosticOutputStream.wrap {
-      val parsed = ParseResult(input)(state)
+      val parsed = ParseResult(input)(using state)
       interpret(parsed)
     }
   private def newRun() = {
@@ -151,7 +151,7 @@ class Repl(settings: List[String]) extends Driver {
     state = state.copy(context = state.context.withSource(parsed.source))
 
     compiler
-      .compile(parsed)(state)
+      .compile(parsed)(using state)
       .fold(
         errors => errors,
         { case (unit: CompilationUnit, newState: State) =>

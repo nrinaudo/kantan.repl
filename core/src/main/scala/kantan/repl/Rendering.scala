@@ -137,7 +137,7 @@ class Rendering(parentClassLoader: Option[ClassLoader] = None) {
     try
       if d.symbol.is(Flags.Lazy) then Some(msg(dcl))
       else valueOf(d.symbol).map(value => msg(s"$dcl = $value"))
-    catch case e: InvocationTargetException => Some(new RuntimeError(renderError(e, d), d.symbol.sourcePos))
+    catch case e: InvocationTargetException => Some(Diagnostic.Error(renderError(e, d), d.symbol.sourcePos))
   end renderVal
 
   /** Force module initialization in the absence of members. */
