@@ -3,6 +3,7 @@ import sbt._, Keys._
 import sbt.plugins.{JvmPlugin, SbtPlugin}
 import sbt.ScriptedPlugin.autoImport._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
+import xerial.sbt.Sonatype.autoImport._
 
 object SbtBuildPlugin extends AutoPlugin {
   override def trigger = allRequirements
@@ -70,12 +71,12 @@ object BuildPlugin extends AutoPlugin {
       run / fork           := true,
       licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       homepage             := Some(url(s"https://nrinaudo.github.io/kantan.dot")),
-      publishTo := Some(
-        if(isSnapshot.value)
-          Opts.resolver.sonatypeSnapshots
-        else
-          Opts.resolver.sonatypeStaging
-      ),
+      publishTo := {
+        val nexus = "https://oss.sonatype.org/"
+        if(isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+        else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+      },
+      publishMavenStyle := true,
       developers := List(
         Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
       ),
